@@ -157,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "blockColumn": function() { return /* binding */ blockColumn; }
+/* harmony export */   blockColumn: function() { return /* binding */ blockColumn; }
 /* harmony export */ });
 var getBlockColumn = function getBlockColumn(optionVal, colClassName, heading) {
   return ['core/column', {
@@ -307,7 +307,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getIconComponent": function() { return /* binding */ getIconComponent; }
+/* harmony export */   getIconComponent: function() { return /* binding */ getIconComponent; }
 /* harmony export */ });
 /* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../icons */ "./src/js/icons/index.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "lodash");
@@ -391,8 +391,8 @@ var SvgClose = function SvgClose(props) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Check": function() { return /* reexport safe */ _Check__WEBPACK_IMPORTED_MODULE_0__["default"]; },
-/* harmony export */   "Close": function() { return /* reexport safe */ _Close__WEBPACK_IMPORTED_MODULE_1__["default"]; }
+/* harmony export */   Check: function() { return /* reexport safe */ _Check__WEBPACK_IMPORTED_MODULE_0__["default"]; },
+/* harmony export */   Close: function() { return /* reexport safe */ _Close__WEBPACK_IMPORTED_MODULE_1__["default"]; }
 /* harmony export */ });
 /* harmony import */ var _Check__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Check */ "./src/js/icons/Check.js");
 /* harmony import */ var _Close__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Close */ "./src/js/icons/Close.js");
@@ -410,26 +410,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
-
-/***/ }),
-
-/***/ "react":
-/*!************************!*\
-  !*** external "React" ***!
-  \************************/
-/***/ (function(module) {
-
-module.exports = window["React"];
-
-/***/ }),
-
-/***/ "lodash":
-/*!*************************!*\
-  !*** external "lodash" ***!
-  \*************************/
-/***/ (function(module) {
-
-module.exports = window["lodash"];
 
 /***/ }),
 
@@ -470,6 +450,26 @@ module.exports = window["wp"]["components"];
 /***/ (function(module) {
 
 module.exports = window["wp"]["i18n"];
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/***/ (function(module) {
+
+module.exports = window["lodash"];
+
+/***/ }),
+
+/***/ "react":
+/*!************************!*\
+  !*** external "React" ***!
+  \************************/
+/***/ (function(module) {
+
+module.exports = window["React"];
 
 /***/ })
 
@@ -542,7 +542,7 @@ module.exports = window["wp"]["i18n"];
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
 !function() {
 /*!**************************!*\
   !*** ./src/js/blocks.js ***!
