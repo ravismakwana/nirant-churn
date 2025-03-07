@@ -1,0 +1,45 @@
+.gallery-slider {
+    .slick-dots {
+        bottom: 30px;
+        li {
+            button{
+                &::before {
+                    font-size: 13px;
+                }
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}
+.problem-section {
+    figure {
+        max-width: 150px;
+        text-align: center;
+    }
+}
+.certi-slider {
+    figure {
+        margin-bottom: 0;
+        max-width: 20%;
+        padding: 0 25px;
+        text-align: center; 
+        img {
+            max-width: 120px;
+            margin: 0 auto;
+        }
+    }
+}
+@media only screen and (max-width:640px){
+    .problem-section {
+        figure {
+            max-width: 120px;
+        }
+    }
+    .certi-slider {
+        figure {
+            max-width: 20%;
+        }
+    }
+}
