@@ -1,5 +1,4 @@
 /******/ (function() { // webpackBootstrap
-var __webpack_exports__ = {};
 /*!**************************!*\
   !*** ./src/js/author.js ***!
   \**************************/
@@ -20,7 +19,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.init();
     }
 
-    _createClass(Author, [{
+    return _createClass(Author, [{
       key: "init",
       value: function init() {
         if (!this.authorProfileImgContainer.length) {
@@ -33,8 +32,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.authorProfileImgContainer.text(initials);
       }
     }]);
-
-    return Author;
   }();
 
   new Author();

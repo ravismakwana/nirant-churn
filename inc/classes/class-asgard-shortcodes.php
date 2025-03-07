@@ -140,11 +140,15 @@ class Asgard_Shortcodes {
 	}
 
 	public function asgard_countdown_timer_shortcode($atts) {
-		$end_date = get_theme_mod('countdown_timer_end_date', '2025-03-15 00:00:00');
+		global $product;
+		$custom_end_date = get_theme_mod('countdown_timer_end_date', '2025-03-15 00:00:00');
+		$product_end_date = $product->get_meta('countdown_timer');
+		$end_date = $product_end_date ? $product_end_date : $custom_end_date;
 		$limited_offer_title = get_theme_mod('countdown_timer_title', 'Limited Time Offer');
 		$unique_id = uniqid('countdown_');
 
 		ob_start();
+		if ($end_date) {
 		?>
 		<div id="<?php echo esc_attr($unique_id); ?>" class="count-down-single-product text-center pb-2 d-flex">
 						<div class="bg-light rounded d-inline-block">
@@ -206,6 +210,7 @@ class Asgard_Shortcodes {
 						})(jQuery);
 		</script>
 		<?php
+		}
 		return ob_get_clean();
 }
 }

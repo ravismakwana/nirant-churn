@@ -25,7 +25,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
      */
 
 
-    _createClass(SlickSlider, [{
+    return _createClass(SlickSlider, [{
       key: "initSlider",
       value: function initSlider() {
         if ($('.gallery-slider').length) {
@@ -123,8 +123,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
       }
     }]);
-
-    return SlickSlider;
   }();
 
   new SlickSlider();
@@ -160,7 +158,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
      */
 
 
-    _createClass(CartRemoveProduct, [{
+    return _createClass(CartRemoveProduct, [{
       key: "init",
       value: function init() {
         var _this = this;
@@ -268,8 +266,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         productContainer.unblock();
       }
     }]);
-
-    return CartRemoveProduct;
   }(); // Initialize the CartRemoveProduct class
 
 
@@ -304,7 +300,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.init();
     }
 
-    _createClass(DropdownWithOverlay, [{
+    return _createClass(DropdownWithOverlay, [{
       key: "init",
       value: function init() {
         var _this = this;
@@ -341,8 +337,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }
       }
     }]);
-
-    return DropdownWithOverlay;
   }();
 
   new DropdownWithOverlay("userMenuDropdown", "dropdownOverlay");
@@ -372,7 +366,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.init();
     }
 
-    _createClass(InstReels, [{
+    return _createClass(InstReels, [{
       key: "init",
       value: function init() {
         var _this = this;
@@ -421,8 +415,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         });
       }
     }]);
-
-    return InstReels;
   }();
 
   if (ajax_object.current_page === 'home') {
@@ -460,7 +452,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.init();
     }
 
-    _createClass(StickyNavbar, [{
+    return _createClass(StickyNavbar, [{
       key: "init",
       value: function init() {
         var _this = this;
@@ -495,8 +487,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.isSticky = false;
       }
     }]);
-
-    return StickyNavbar;
   }(); // Initialize the CartRemoveProduct class
 
 
@@ -525,7 +515,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       this.init();
     }
 
-    _createClass(Woo, [{
+    return _createClass(Woo, [{
       key: "init",
       value: function init() {
         this.setInitialPrices();
@@ -624,8 +614,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         });
       }
     }]);
-
-    return Woo;
   }();
 
   new Woo();
@@ -715,7 +703,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 !function() {
 "use strict";
 /*!************************!*\

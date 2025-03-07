@@ -9,8 +9,12 @@ $link-hover: #eaf7eb;
 $body-bg: #f7f4e9;
 $text-gray-500: #292929;
 
-
 .single-product {
+  &.product-has-gallery {
+    .onsale {
+      margin-left: 100px !important;
+    }
+  }
  .single-product-image {
   .woocommerce-product-gallery {
    display: flex;
@@ -30,9 +34,12 @@ $text-gray-500: #292929;
      }
     }
    }
+   .woocommerce-product-gallery__wrapper {
+    width: 100%;
+   }
   }
   .onsale {
-    margin-left: 100px;
+    margin-left: 10px;
     min-height: unset;
     min-width: unset;
     background: #EF0000;
@@ -187,7 +194,7 @@ $text-gray-500: #292929;
     }
    }
    .onsale {
-    margin-left: 10px;
+    margin-left: 10px !important;
    }
   }
  }
