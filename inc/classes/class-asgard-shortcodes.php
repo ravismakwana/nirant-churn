@@ -22,6 +22,8 @@ class Asgard_Shortcodes {
 		add_shortcode( 'current_year', [ $this, 'asgard_current_year' ] );
 		add_shortcode( 'instagram_reels_popup', [ $this, 'asgard_fetch_instagram_reels_with_popup' ] );
 		add_shortcode( 'countdown_timer', [ $this, 'asgard_countdown_timer_shortcode' ] );
+		add_shortcode('full_product_template', [$this, 'display_full_product_template']);
+		add_shortcode('asgard_homepage_gallery_slider', [$this, 'render_asgard_homepage_gallery_slider']);
 	}
 
 	public function get_worldcollection_category_tree( $cat ) {
@@ -213,4 +215,73 @@ class Asgard_Shortcodes {
 		}
 		return ob_get_clean();
 }
+
+public function display_full_product_template($atts) {
+	// Prevent running in the WordPress block editor
+	if (is_admin() && function_exists('get_current_screen') && get_current_screen()->is_block_editor()) {
+					return '<p>Product display only visible on the frontend.</p>';
+	}
+
+	$atts = shortcode_atts([
+					'id' => '',
+	], $atts);
+
+	if (empty($atts['id'])) {
+					return '<p>No product ID provided.</p>';
+	}
+
+	$product = wc_get_product($atts['id']);
+
+	if (!$product || !is_a($product, 'WC_Product')) {
+					return '<p>Product not found or invalid product.</p>';
+	}
+
+	// Save the original global $post and $product
+	global $post;
+	$original_post = $post;
+	$original_product = isset($GLOBALS['product']) ? $GLOBALS['product'] : null;
+
+	// Set the product post and product object
+	$post = get_post($product->get_id());
+	setup_postdata($post);
+	$GLOBALS['product'] = $product;
+
+	// Start output buffering
+	ob_start();
+
+	// Load the full single product template
+	wc_get_template_part('content', 'single-product');
+
+	// Clean up
+	wp_reset_postdata();
+	$post = $original_post;
+	$GLOBALS['product'] = $original_product;
+
+	return ob_get_clean();
+}
+
+public function render_asgard_homepage_gallery_slider() {
+	$images = wp_is_mobile() ? [
+		esc_url(get_theme_mod('mobile_slide_1', '')),
+		esc_url(get_theme_mod('mobile_slide_2', '')),
+		esc_url(get_theme_mod('mobile_slide_3', ''))
+] : [
+		esc_url(get_theme_mod('desktop_slide_1', '')),
+		esc_url(get_theme_mod('desktop_slide_2', '')),
+		esc_url(get_theme_mod('desktop_slide_3', ''))
+];
+
+ob_start();
+?>
+<div class="gallery-slider" id="gallery-container">
+		<?php foreach ($images as $image) : ?>
+						<?php if (!empty($image)) : ?>
+										<div><img src="<?php echo esc_url($image); ?>" alt="Gallery Image" loading="lazy"></div>
+						<?php endif; ?>
+		<?php endforeach; ?>
+</div>
+<?php
+return ob_get_clean();
+}
+
 }
