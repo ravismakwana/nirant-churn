@@ -28,3 +28,4 @@ sftp-config.json
 *.sublime-project
 *.sublime-workspace
 *.zip
+assets/build/assets.php
