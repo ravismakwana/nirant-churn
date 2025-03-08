@@ -40,7 +40,9 @@ class Asgard_Customizer {
             'priority' => 140,
         ]);
 
-        $this->add_datetime_control($wp_customize, 'countdown_timer_end_date', 'End Date and Time (YYYY-MM-DD HH:MM:SS)', 'countdown_timer_section', '2025-03-15 00:00:00');
+        $default_end_date = gmdate('Y-m-d\TH:i', strtotime('+5 days'));
+
+        $this->add_datetime_control($wp_customize, 'countdown_timer_end_date', 'End Date and Time (YYYY-MM-DD HH:MM:SS)', 'countdown_timer_section', $default_end_date);
         $this->add_text_control($wp_customize, 'countdown_timer_title', 'Countdown Title', 'countdown_timer_section', 'LIMITED TIME OFFER');
 
         $wp_customize->add_setting('countdown_revert_text', [
@@ -141,6 +143,9 @@ class Asgard_Customizer {
             'label'    => __($label, 'asgard'),
             'section'  => $section,
             'type'     => 'datetime-local',
+            'input_attrs' => [
+                'min' => gmdate('Y-m-d\TH:i')
+            ]
         ]);
     }
 

@@ -46,6 +46,12 @@ class Woo_Product_Single {
 		remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
 		remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
 		add_action( 'asgard_show_product_images_with_slider', 'woocommerce_show_product_images', 20 );
+
+		// remove_action( 'woocommerce_single_product_summary', 'display_single_product_guarantee', 36 );
+		if ( is_front_page() ) {
+			remove_action( 'woocommerce_single_product_summary', [	$this,	'display_single_product_guarantee'	], 36 );
+		}
+		
 	}
 
 	public function custom_onsale_badge($html, $post, $product) {
@@ -201,73 +207,81 @@ $show_price = $default_variation && !empty($default_variation['price']) && $defa
 
 
 public function custom_single_product_excerpt() {
-	global $product;
-	if ( $product->get_short_description() ) : ?>
-		<div class="accordion productAccordion" id="productAccordion">
-			<div class="accordion-item border-end-0 border-start-0 bg-transparent shadow-none">
-				<h2 class="accordion-header border-0" id="headingOne">
-					<button class="accordion-button border-0 rounded-0 fs-16 fw-medium bg-transparent shadow-none text-primary py-4 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
-				</h2>
-				<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#productAccordion">
-					<div class="accordion-body">
-						<?php echo wp_kses_post( $product->get_short_description() ); ?>
+	if ( is_product() ) {
+		global $product;
+		if ( $product->get_short_description() ) : ?>
+			<div class="accordion productAccordion" id="productAccordion">
+				<div class="accordion-item border-end-0 border-start-0 bg-transparent shadow-none">
+					<h2 class="accordion-header border-0" id="headingOne">
+						<button class="accordion-button border-0 rounded-0 fs-16 fw-medium bg-transparent shadow-none text-primary py-4 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Description</button>
+					</h2>
+					<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#productAccordion">
+						<div class="accordion-body">
+							<?php echo wp_kses_post( $product->get_short_description() ); ?>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	<?php endif;
+		<?php endif;
+	}
 	}
 
 	public function display_single_product_guarantee() {
-		$single_product_guaranteed_text = get_theme_mod('single_product_guaranteed_text');
-		$single_product_payment_logo = get_theme_mod('single_product_payment_logo');
-		
-		if ($single_product_guaranteed_text || $single_product_payment_logo) {
-						echo '<ul class="single-product-guarantee list-unstyled p-0 m-0 pt-4">';
-						
-						if ($single_product_guaranteed_text) {
-										echo '<li class="d-flex align-items-center gap-3 pb-3">';
-										echo '<svg width="24" height="24" fill="#489950"><use href="#icon-shield"></use></svg>';
-										echo '<p class="text-uppercase text-black fs-16 mb-0 fw-medium">' . esc_html($single_product_guaranteed_text) . '</p>';
-										echo '</li>';
-						}
-						
-						if ($single_product_payment_logo) {
-										echo '<li>';
-										echo '<img src="' . esc_url($single_product_payment_logo) . '" alt="' . esc_attr($single_product_guaranteed_text) . '">';
-										echo '</li>';
-						}
-						
-						echo '</ul>';
+		if ( is_product() ) {
+			$single_product_guaranteed_text = get_theme_mod('single_product_guaranteed_text');
+			$single_product_payment_logo = get_theme_mod('single_product_payment_logo');
+			
+			if ($single_product_guaranteed_text || $single_product_payment_logo) {
+							echo '<ul class="single-product-guarantee list-unstyled p-0 m-0 pt-4">';
+							
+							if ($single_product_guaranteed_text) {
+											echo '<li class="d-flex align-items-center gap-3 pb-3">';
+											echo '<svg width="24" height="24" fill="#489950"><use href="#icon-shield"></use></svg>';
+											echo '<p class="text-uppercase text-black fs-16 mb-0 fw-medium">' . esc_html($single_product_guaranteed_text) . '</p>';
+											echo '</li>';
+							}
+							
+							if ($single_product_payment_logo) {
+											echo '<li>';
+											echo '<img src="' . esc_url($single_product_payment_logo) . '" alt="' . esc_attr($single_product_guaranteed_text) . '">';
+											echo '</li>';
+							}
+							
+							echo '</ul>';
+			}
 		}
+		
 	}
 
 	public function asgard_seprate_description_review() {
-		global $post;
+		if ( is_product() ) {
+			global $post;
 
-		echo '<div class="product-description pt-5 pb-4">';
-		the_content();
-		echo '</div>';
-
-		// Display the reviews below the description
-		comments_template();
+			echo '<div class="product-description pt-5 pb-4">';
+			the_content();
+			echo '</div>';
+	
+			// Display the reviews below the description
+			comments_template();
+		}
 	}
 
 	public function add_field() {
-		$tomorrow = date('Y-m-d 00:00:00', strtotime('+1 day'));
+		global $post;
+		$selected_date = get_post_meta($post->ID, 'countdown_timer', true);
 		woocommerce_wp_text_input([
-						'id' => 'countdown_timer',
-						'label' => __('Countdown Timer', 'woocommerce'),
-						'placeholder' => 'YYYY-MM-DD 00:00:00',
-						'desc_tip' => true,
-						'description' => __('Set the countdown timer in format YYYY-MM-DD 00:00:00', 'woocommerce'),
-						'value' => $tomorrow
+			'id' => 'countdown_timer',
+			'label' => __('Countdown Timer', 'woocommerce'),
+			'placeholder' => 'YYYY-MM-DD 00:00:00',
+			'desc_tip' => true,
+			'description' => __('Set the countdown timer in format YYYY-MM-DD 00:00:00', 'woocommerce'),
+			'value' => $selected_date
 		]);
 }
 
 public function save_field($product) {
 		if (isset($_POST['countdown_timer'])) {
-						$product->update_meta_data('countdown_timer', sanitize_text_field($_POST['countdown_timer']));
+				$product->update_meta_data('countdown_timer', sanitize_text_field($_POST['countdown_timer']));
 		}
 }
 
@@ -276,15 +290,16 @@ public function add_datepicker_script() {
 		if ('product' !== $post->post_type) return;
 		?>
 		<script>
-						jQuery(function($) {
-										$('#countdown_timer').datepicker({
-														dateFormat: 'yy-mm-dd',
-														timeFormat: 'HH:mm:ss'
-										});
+				jQuery(function($) {
+						$('#countdown_timer').datepicker({
+								dateFormat: 'yy-mm-dd',
+								timeFormat: 'HH:mm:ss'
 						});
+				});
 		</script>
 		<?php
 }
+
 
 public function asgard_gallery_body_class($classes) {
 	if (is_product()) {
