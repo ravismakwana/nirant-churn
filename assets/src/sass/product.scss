@@ -15,6 +15,14 @@ $text-gray-500: #292929;
       margin-left: 100px !important;
     }
   }
+  #review_form_wrapper {
+    max-width: 750px;
+    .comment-form-cookies-consent {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+  }
  .single-product-image {
   .woocommerce-product-gallery {
    display: flex;
