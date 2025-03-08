@@ -76,8 +76,11 @@
             }
             .custom-product-info {
                 .custom-price {
-                    .text-muted {
+                    .text-danger {
                         color: #fff !important;
+                    }
+                    .text-muted {
+                        color: #918a8a !important;
                     }
                 }
                 .custom-quantity {
