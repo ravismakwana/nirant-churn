@@ -20,6 +20,7 @@ class Assets {
 		add_action('wp_enqueue_scripts', [$this, 'register_styles']);
 		add_action('wp_enqueue_scripts', [$this, 'register_scripts']);
 		add_action('enqueue_block_assets', [$this, 'enqueue_editor_assets']);
+		add_action('wp_footer', [ $this, 'enqueue_slider_script' ]);
 	}
 
 	public function register_styles(){
@@ -39,7 +40,7 @@ class Assets {
 		if(is_front_page()) {
 			wp_enqueue_style('home');
 		}
-		if(is_product()) {
+		if(is_product() || is_shop()) {
 			wp_enqueue_style('product');
 			wp_enqueue_style('woocommerce-general');
 		}
@@ -126,4 +127,49 @@ class Assets {
 		);
 
 	}
+
+	public function enqueue_slider_script() {
+		?>
+		<script>
+		document.addEventListener("DOMContentLoaded", function () {
+						if (typeof jQuery.fn.slick !== 'function') {
+										console.warn('Slick slider not loaded');
+										return;
+						}
+
+						function initSlick() {
+										jQuery('#gallery-container').slick({
+														slidesToShow: 1,
+														slidesToScroll: 1,
+														autoplay: true,
+														autoplaySpeed: 3000,
+														dots: true,
+														arrows: false
+										});
+						}
+
+						function reloadGallery() {
+										var isMobile = window.innerWidth <= 768;
+										var images = isMobile 
+														? ["<?php echo esc_url(get_theme_mod('mobile_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_3', '')); ?>"]
+														: ["<?php echo esc_url(get_theme_mod('desktop_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_3', '')); ?>"];
+
+										var galleryContainer = document.getElementById("gallery-container");
+										if (jQuery('#gallery-container').hasClass('slick-initialized')) {
+														jQuery('#gallery-container').slick('unslick');
+										}
+
+										galleryContainer.innerHTML = images.filter(src => src).map(src => `<div><img src="${src}" alt="Gallery Image" loading="lazy"></div>`).join('');
+
+										if (images.length > 0) {
+														initSlick();
+										}
+						}
+
+						initSlick();
+						window.addEventListener('resize', reloadGallery);
+		});
+		</script>
+		<?php
+}
 }

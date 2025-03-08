@@ -31,6 +31,88 @@
         }
     }
 }
+.homepage-product-section {
+    .woocommerce-notices-wrapper {
+        display: none;
+    }
+    .product-image-plus-summary {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        .single-product-image {
+            margin-bottom: 1rem;
+            .woocommerce-product-gallery {
+                opacity: 1 !important;
+                width: 100% !important;
+                .woocommerce-product-gallery__image:not(:first-child) {
+                    display: none;
+                }
+            }
+            .onsale {
+                background-color: #ef0000;
+                font-size: 12px;
+                left: 25px !important;
+                position: absolute;
+                top: 10px;
+                color: #fff;
+                border-radius: 30px;
+                line-height: normal;
+                min-width: auto;
+                min-height: auto;
+            }
+        }
+        .summary {
+            .product_title {
+                color: #fff !important;
+            }
+            .woocommerce-product-rating {
+                display: none !important;
+                .custom-star-rating {
+                    .star-rating {
+                        color: #FFBA00;
+                        margin: 0;
+                    }
+                }
+            }
+            .custom-product-info {
+                .custom-price {
+                    .text-muted {
+                        color: #fff !important;
+                    }
+                }
+                .custom-quantity {
+                    color: #fff;
+                    .quantity-options {
+                        button {
+                            background: #efefef;
+                            border: 1px solid #efefef;
+                            color: #000;
+                            &.active {
+                                background: #489950;
+                                border-color: #489950;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+                .price-revert-back {
+                    p {
+                        color: #fff !important;
+                    }
+                }
+            }
+        }
+    }
+    .productAccordion,
+    .single-product-guarantee,
+    .product-description,
+    .woocommerce-Reviews,
+    .count-down-single-product,
+    .price-revert-back,
+    .woocommerce-product-rating  {
+        display: none !important;
+    }
+}
 @media only screen and (max-width:640px){
     .problem-section {
         figure {

@@ -36,16 +36,16 @@ class Woo_Product_Single {
 		add_action('woocommerce_admin_process_product_object', [$this, 'save_field']);
 		add_action('admin_footer', [$this, 'add_datepicker_script']);
 
-			remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
-			remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
-			add_action( 'asgard_show_product_sale_badge', 'woocommerce_show_product_sale_flash', 20 );
-			remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
-			remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
-			remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-			remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
-			remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
-			add_action( 'asgard_show_product_images_with_slider', 'woocommerce_show_product_images', 20 );
+		remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+		remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_sale_flash', 10 );
+		add_action( 'asgard_show_product_sale_badge', 'woocommerce_show_product_sale_flash', 20 );
+		remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+		remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+		remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40);
+		remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
+		add_action( 'asgard_show_product_images_with_slider', 'woocommerce_show_product_images', 20 );
 	}
 
 	public function custom_onsale_badge($html, $post, $product) {

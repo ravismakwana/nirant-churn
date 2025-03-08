@@ -24,21 +24,21 @@
             
                             // Move src to data-lazy
                             img.setAttribute("data-lazy", img.getAttribute("src"));
-                            img.removeAttribute("src");
+                            // img.removeAttribute("src");
                         }
                     });
                 });
             });
             
-                $('.gallery-slider ').slick({
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    autoplay: false,
-                    lazyLoad: 'ondemand',
-                    autoplaySpeed: 2000,
-                    dots: true,
-                    arrows: false,
-                });
+                // $('.gallery-slider ').slick({
+                //     slidesToShow: 1,
+                //     slidesToScroll: 1,
+                //     autoplay: false,
+                //     lazyLoad: 'ondemand',
+                //     autoplaySpeed: 2000,
+                //     dots: true,
+                //     arrows: false,
+                // });
             }
             if ($('.certi-slider').length) {
                 $('.certi-slider ').slick({
