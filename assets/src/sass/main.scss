@@ -95,6 +95,18 @@ body {
 .add_to_cart_button.ajax_add_to_cart.loading {
     margin-right: 10px;
 }
+.woocommerce-notices-wrapper {
+    .woocommerce-message {
+        border-top-color: $primary;
+        a.button.wc-forward {
+            background-color: $primary;
+            color: #fff;
+        }
+        &::before {
+            color: $primary;
+        }
+    }
+}
 .custom-logo-link  {
     img {
         &.custom-logo {

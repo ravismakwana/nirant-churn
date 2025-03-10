@@ -143,78 +143,88 @@ class Asgard_Shortcodes {
 
 	public function asgard_countdown_timer_shortcode($atts) {
 		global $product;
-		$custom_end_date = get_theme_mod('countdown_timer_end_date', '2025-03-15 00:00:00');
+		$custom_end_date = get_theme_mod('countdown_timer_end_date');
 		$product_end_date = $product->get_meta('countdown_timer');
 		$end_date = $product_end_date ? $product_end_date : $custom_end_date;
 		$limited_offer_title = get_theme_mod('countdown_timer_title', 'Limited Time Offer');
 		$unique_id = uniqid('countdown_');
-
+	
+		// Ensure end date always expires at 11:59:59 PM
+		$end_date = date('Y-m-d 23:59:59', strtotime($end_date));
+	
+		// Check if end date is today and not yet passed midnight
+		if (strtotime($end_date) < time()) {
+			// Reset to 5-day timer starting from next midnight
+			$end_date = date('Y-m-d 23:59:59', strtotime('+5 days'));
+		}
+	
 		ob_start();
 		if ($end_date) {
 		?>
 		<div id="<?php echo esc_attr($unique_id); ?>" class="count-down-single-product text-center pb-2 d-flex">
-						<div class="bg-light rounded d-inline-block">
-										<div class="bg-primary-subtle">
-														<h5 class="text-success fs-14 py-2 mb-0 text-uppercase"><?php echo $limited_offer_title; ?></h5>
-										</div>
-										<div class="countdown p-3 d-flex justify-content-between gap-3">
-														<div>
-																		<h3 class="text-success fs-4 fw-bold mb-0 days">00</h3>
-																		<p class="fs-6 fw-bold mb-0 text-success">days</p>
-														</div>
-														<div>
-																		<h3 class="text-success fs-4 fw-bold mb-0 hours">00</h3>
-																		<p class="fs-6 fw-bold mb-0 text-success">hours</p>
-														</div>
-														<div>
-																		<h3 class="text-success fs-4 fw-bold mb-0 minutes">00</h3>
-																		<p class="fs-6 fw-bold mb-0 text-success">minutes</p>
-														</div>
-														<div>
-																		<h3 class="text-success fs-4 fw-bold mb-0 seconds">00</h3>
-																		<p class="fs-6 fw-bold mb-0 text-success">seconds</p>
-														</div>
-										</div>
-						</div>
+			<div class="bg-light rounded d-inline-block">
+				<div class="bg-primary-subtle">
+					<h5 class="text-success fs-14 py-2 mb-0 text-uppercase"><?php echo $limited_offer_title; ?></h5>
+				</div>
+				<div class="countdown p-3 d-flex justify-content-between gap-3">
+					<div>
+						<h3 class="text-success fs-4 fw-bold mb-0 days">00</h3>
+						<p class="fs-6 fw-bold mb-0 text-success">days</p>
+					</div>
+					<div>
+						<h3 class="text-success fs-4 fw-bold mb-0 hours">00</h3>
+						<p class="fs-6 fw-bold mb-0 text-success">hours</p>
+					</div>
+					<div>
+						<h3 class="text-success fs-4 fw-bold mb-0 minutes">00</h3>
+						<p class="fs-6 fw-bold mb-0 text-success">minutes</p>
+					</div>
+					<div>
+						<h3 class="text-success fs-4 fw-bold mb-0 seconds">00</h3>
+						<p class="fs-6 fw-bold mb-0 text-success">seconds</p>
+					</div>
+				</div>
+			</div>
 		</div>
-
+	
 		<script>
-						(function($) {
-										function startCountdown(endDate, container) {
-														const end = new Date(endDate).getTime();
-
-														const timer = setInterval(function() {
-																		const now = new Date().getTime();
-																		const distance = end - now;
-
-																		if (distance < 0) {
-																						clearInterval(timer);
-																						startCountdown(endDate, container);
-																						return;
-																		}
-
-																		const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-																		const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-																		const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-																		const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-																		container.find('.days').text(String(days).padStart(2, '0'));
-																		container.find('.hours').text(String(hours).padStart(2, '0'));
-																		container.find('.minutes').text(String(minutes).padStart(2, '0'));
-																		container.find('.seconds').text(String(seconds).padStart(2, '0'));
-														}, 1000);
-										}
-
-										$(document).ready(function() {
-														const container = $('#<?php echo esc_js($unique_id); ?>');
-														startCountdown('<?php echo esc_js($end_date); ?>', container);
-										});
-						})(jQuery);
+			(function($) {
+				function startCountdown(endDate, container) {
+					const end = new Date(endDate).getTime();
+	
+					const timer = setInterval(function() {
+						const now = new Date().getTime();
+						const distance = end - now;
+	
+						if (distance < 0) {
+							clearInterval(timer);
+							container.hide();
+							return;
+						}
+	
+						const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+						const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+						const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+						const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	
+						container.find('.days').text(String(days).padStart(2, '0'));
+						container.find('.hours').text(String(hours).padStart(2, '0'));
+						container.find('.minutes').text(String(minutes).padStart(2, '0'));
+						container.find('.seconds').text(String(seconds).padStart(2, '0'));
+					}, 1000);
+				}
+	
+				$(document).ready(function() {
+					const container = $('#<?php echo esc_js($unique_id); ?>');
+					startCountdown('<?php echo esc_js($end_date); ?>', container);
+				});
+			})(jQuery);
 		</script>
 		<?php
 		}
 		return ob_get_clean();
-}
+	}
+	
 
 public function display_full_product_template($atts) {
 	// Prevent running in the WordPress block editor
