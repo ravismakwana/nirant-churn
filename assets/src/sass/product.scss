@@ -84,8 +84,15 @@ $text-gray-500: #292929;
         padding-top: 10px;
         color: #fff;
         border-radius: 0 0 2px 2px;
-        padding-bottom: 10px;
-      }    
+      }
+      li {
+        &:first-child {
+          padding-top: 16px;
+        }
+        &:last-child {
+          padding-bottom: 10px;
+        }
+      }
      }
      &.active {
       background: var(--bs-primary-bg-subtle);
