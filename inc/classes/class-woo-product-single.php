@@ -161,20 +161,51 @@ $show_price = $default_variation && !empty($default_variation['price']) && $defa
 														</span>
 										<?php //endif; ?>
 						</div>
-
 						<div class="custom-quantity pb-4">
 										<p>Quantity - <strong id="selected-quantity"><?php echo key($variations); ?></strong></p>
-										<div class="quantity-options">
-														<?php foreach ($variations as $label => $variation) : ?>
-																		<button 
-																						data-variation-id="<?php echo esc_attr($variation['id']); ?>" 
-																						data-price="<?php echo esc_attr($variation['price']); ?>" 
-																						data-regular-price="<?php echo esc_attr($variation['regular_price'] ?? ''); ?>"
-																						data-label="<?php echo esc_attr($label); ?>"
-																						class="py-1 px-3 rounded-5 <?php echo $label === key($variations) ? 'active' : ''; ?>">
-																						<?php echo esc_html($label); ?>
-																		</button>
-														<?php endforeach; ?>
+										<div class="quantity-options d-flex gap-3">
+										<?php foreach ($variations as $label => $variation) :
+														$price = (float)$variation['price'];
+														$regular_price = !empty($variation['regular_price']) ? (float)$variation['regular_price'] : null;
+														$discount_percentage = $regular_price ? round((($regular_price - $price) / $regular_price) * 100) : 0;
+														$savings = $regular_price ? $regular_price - $price : 0;
+														$pack_days = $variation['attributes']['pack_days'] ?? 'N/A';
+														$pack_info = get_post_meta( $variation['id'], '_product_pack_variation', true );
+														$best_results_info = get_post_meta( $variation['id'], '_product_best_results_variation', true );
+														$sale_price = get_post_meta( $variation['id'], '_sale_price', true );
+
+										?>
+
+														<button 
+																		data-variation-id="<?php echo esc_attr($variation['id']); ?>" 
+																		data-price="<?php echo esc_attr($price); ?>" 
+																		data-regular-price="<?php echo esc_attr($regular_price ?? ''); ?>"
+																		data-label="<?php echo esc_attr($label); ?>"
+																		class="p-0 rounded-2 d-flex align-items-start <?php echo $label === key($variations) ? 'active' : ''; ?>">
+																		<ul class="variation-details-big list-unstyled p-0 m-0 d-flex flex-column gap-3 align-items-start text-left">
+																						<?php if ($label) : ?>
+																							<li class="variation-details-value px-3 pt-3 w-100 fs-18 fw-bold"><?php echo esc_html($label); ?></li>
+																						<?php endif; ?>
+																						<?php if ($pack_info) : ?>
+																							<li class="variation-details-pack-days px-3 w-100 fs-18 fw-medium"><?php echo esc_html($pack_info); ?></li>
+																						<?php endif; ?>
+																						<?php if ($discount_percentage > 0) : ?>
+																										<li class="variation-details-discount px-3 w-100 fs-16 fw-bold text-danger"><?php echo esc_html($discount_percentage); ?>% off</li>
+																						<?php endif; ?>
+																						<li class="variation-details-price px-3 w-100 fs-5 fw-bold fs-5"><?php echo wc_price($price); ?></li>
+																						<?php if ($sale_price) : ?>
+																										<li class="variation-details-original-price px-3 w-100 text-muted position-relative"><s><?php echo wc_price($regular_price); ?></s> <br>Incl. of all taxes</li>
+																						<?php endif; ?>
+																						<?php if ($savings > 0) : ?>
+																										<li class="variation-details-savings px-3 w-100 fs-16 fw-bold text-danger">Save ₹<?php echo number_format($savings, 2); ?>/-</li>
+																						<?php endif; ?>
+																						<?php if ($best_results_info) : ?>
+																										<li class="highlight-tag best-result px-3 w-100 bg-primary text-center"><?php echo $best_results_info; ?></li>
+																						<?php endif; ?>
+																		</ul>
+														</button>
+
+										<?php endforeach; ?>
 										</div>
 						</div>
 
