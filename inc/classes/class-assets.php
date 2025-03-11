@@ -132,43 +132,46 @@ class Assets {
 		?>
 		<script>
 		document.addEventListener("DOMContentLoaded", function () {
-						if (typeof jQuery.fn.slick !== 'function') {
-										console.warn('Slick slider not loaded');
-										return;
-						}
+    var galleryContainer = document.getElementById("gallery-container");
+    if (!galleryContainer) {
+        return;
+    }
 
-						function initSlick() {
-										jQuery('#gallery-container').slick({
-														slidesToShow: 1,
-														slidesToScroll: 1,
-														autoplay: false,
-														autoplaySpeed: 3000,
-														dots: true,
-														arrows: false
-										});
-						}
+    if (typeof jQuery.fn.slick !== 'function') {
+        return;
+    }
 
-						function reloadGallery() {
-										var isMobile = window.innerWidth <= 768;
-										var images = isMobile 
-														? ["<?php echo esc_url(get_theme_mod('mobile_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_3', '')); ?>"]
-														: ["<?php echo esc_url(get_theme_mod('desktop_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_3', '')); ?>"];
+    function initSlick() {
+        jQuery('#gallery-container').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            autoplay: false,
+            autoplaySpeed: 3000,
+            dots: true,
+            arrows: false
+        });
+    }
 
-										var galleryContainer = document.getElementById("gallery-container");
-										if (jQuery('#gallery-container').hasClass('slick-initialized')) {
-														jQuery('#gallery-container').slick('unslick');
-										}
+    function reloadGallery() {
+        var isMobile = window.innerWidth <= 768;
+        var images = isMobile 
+            ? ["<?php echo esc_url(get_theme_mod('mobile_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('mobile_slide_3', '')); ?>"]
+            : ["<?php echo esc_url(get_theme_mod('desktop_slide_1', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_2', '')); ?>", "<?php echo esc_url(get_theme_mod('desktop_slide_3', '')); ?>"];
 
-										galleryContainer.innerHTML = images.filter(src => src).map(src => `<div><img src="${src}" alt="Gallery Image" loading="lazy"></div>`).join('');
+        if (jQuery('#gallery-container').hasClass('slick-initialized')) {
+            jQuery('#gallery-container').slick('unslick');
+        }
 
-										if (images.length > 0) {
-														initSlick();
-										}
-						}
+        galleryContainer.innerHTML = images.filter(src => src).map(src => `<div><img src="${src}" alt="Gallery Image" loading="lazy"></div>`).join('');
 
-						initSlick();
-						window.addEventListener('resize', reloadGallery);
-		});
+        if (images.length > 0) {
+            initSlick();
+        }
+    }
+
+    initSlick();
+    window.addEventListener('resize', reloadGallery);
+});
 		</script>
 		<?php
 }

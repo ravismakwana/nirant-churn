@@ -72,13 +72,30 @@ $text-gray-500: #292929;
   .custom-quantity {
    .quantity-options {
     button {
-     background: #EFEFEF;
+     background: #fff;
      color: #000;
-     border: 1px solid #EFEFEF;
+     border: 2px solid #cccccc;
+     .variation-details-big {
+      .variation-details-original-price {
+        font-size: 12px;
+        top: -10px;
+      }
+      .best-result {
+        padding-top: 10px;
+        color: #fff;
+        border-radius: 0 0 2px 2px;
+        padding-bottom: 10px;
+      }    
+     }
      &.active {
-      background: $primary;
-      color: #fff;
+      background: var(--bs-primary-bg-subtle);
+      color: $primary;
       border-color: $primary;
+      .variation-details-big {
+        .best-result {
+          border-radius: 0;
+        }    
+       }
      }
     }
    }
