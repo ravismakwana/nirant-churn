@@ -65,6 +65,12 @@ class Asgard_Customizer {
 
         $this->add_text_control($wp_customize, 'single_product_guaranteed_text', 'Guaranteed Text', 'single_product_section', 'Guaranteed Safe Checkout');
         $this->add_image_control($wp_customize, 'single_product_payment_logo', 'Payment Logo', 'single_product_section');
+
+        // Adding Delivery Box Images
+        for ($i = 1; $i <= 4; $i++) {
+            $this->add_image_control($wp_customize, "single_product_delivery_box_$i", "Delivery Box $i", 'single_product_section');
+            $this->add_text_control($wp_customize, "single_product_delivery_box_desc_$i", "Delivery Box $i Description", 'single_product_section', "Description for Delivery Box $i");
+        }
     }
 
     private function add_homepage_slider_panel($wp_customize) {

@@ -25,7 +25,8 @@ class Woo_Product_Single {
 		add_action( 'woocommerce_before_single_product_summary', [ $this, 'asgard_woocommerce_show_product_images' ] );
 		add_action( 'woocommerce_single_product_summary', [	$this,	'custom_single_product_add_to_cart'	], 30 );
 		add_action( 'woocommerce_single_product_summary', [	$this,	'custom_single_product_excerpt'	], 35 );
-		add_action( 'woocommerce_single_product_summary', [	$this,	'display_single_product_guarantee'	], 36 );
+		// add_action( 'woocommerce_single_product_summary', [	$this,	'asgard_delivery_boxes'	], 36 );
+		add_action( 'woocommerce_single_product_summary', [	$this,	'display_single_product_guarantee'	], 37 );
 		add_action( 'comment_post_redirect', [	$this,	'asgard_comment_post_redirect'	], 10, 2 );
 		add_action( 'woocommerce_after_single_product_summary', [	$this,	'asgard_seprate_description_review'	], 10 );
 		add_filter( 'woocommerce_sale_flash', [	$this,	'custom_onsale_badge'	], 10, 3 );
@@ -347,4 +348,42 @@ public function asgard_gallery_body_class($classes) {
 }
 return $classes;
 }
+
+public static function get_single_product_delivery_data() {
+	$delivery_data = [];
+
+	for ($i = 1; $i <= 4; $i++) {
+					$delivery_data[] = [
+									'image'       => get_theme_mod("single_product_delivery_box_$i", ''),
+									'description' => get_theme_mod("single_product_delivery_box_desc_$i", "Description for Delivery Box $i"),
+					];
+	}
+
+	return $delivery_data;
+}
+
+
+public function asgard_delivery_boxes() {
+	$delivery_data = Woo_Product_Single::get_single_product_delivery_data();
+
+	if (!empty($delivery_data)) {
+					echo '<div class="d-flex delivery-boxes-container gap-3 py-4 flex-md-nowrap flex-wrap">';
+
+					foreach ($delivery_data as $box) {
+									if (!empty($box['image'])) {
+													echo '<div class="delivery-box-item d-flex flex-column gap-3 text-center">';
+													echo '<img src="' . esc_url($box['image']) . '" alt="" class="mx-auto">';
+													
+													if (!empty($box['description'])) {
+																	echo '<p class="fs-14 text-black fw-medium">' . esc_html($box['description']) . '</p>';
+													}
+
+													echo '</div>';
+									}
+					}
+
+					echo '</div>';
+	}
+}
+
 }
