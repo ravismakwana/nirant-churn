@@ -95,7 +95,6 @@ $text-gray-500: #292929;
       }
      }
      &.active {
-      background: var(--bs-primary-bg-subtle);
       color: $primary;
       border-color: $primary;
       .variation-details-big {
