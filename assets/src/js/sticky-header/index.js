@@ -4,9 +4,8 @@
      * Handles sticky navbar and smooth scrolling with correct offset.
      */
     class StickyNavbar {
-        constructor(navSelector, headerSelector) {
+        constructor(navSelector) {
             this.navbar = document.querySelector(navSelector);
-            this.header = document.querySelector(headerSelector);
             this.navbarHeight = 0;
             this.isSticky = false;
             this.init();
@@ -45,21 +44,17 @@
 
         updateNavbarHeight() {
             if (this.navbar) {
-                this.navbarHeight = this.navbar.offsetHeight;
+                this.navbarHeight = this.navbar.getBoundingClientRect().height; // More accurate
             }
         }
 
         getOffset() {
-            let offset = 0;
-            
-            if (this.header) {
-                offset = this.header.offsetHeight;
-            }
+            let offset = this.navbarHeight; // Always use updated navbar height
 
-            // If navbar is fixed or sticky, add its height
+            // If navbar is sticky, ensure we adjust for its height
             const navbarStyles = window.getComputedStyle(this.navbar);
             if (navbarStyles.position === "fixed" || this.isSticky) {
-                offset += this.navbarHeight;
+                offset = this.navbar.getBoundingClientRect().height;
             }
 
             return offset;
@@ -78,6 +73,7 @@
 
             if (targetElement) {
                 setTimeout(() => {
+                    this.updateNavbarHeight(); // Ensure correct height before scrolling
                     const offset = this.getOffset();
                     const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - offset;
 
@@ -93,7 +89,7 @@
     // Ensure script runs only after full page load
     $(document).ready(() => {
         setTimeout(() => {
-            new StickyNavbar('.main-navbar', '.main-header'); // Uses .main-header height as offset
+            new StickyNavbar('.main-navbar'); // Correctly initializes sticky navbar
         }, 100);
     });
 
