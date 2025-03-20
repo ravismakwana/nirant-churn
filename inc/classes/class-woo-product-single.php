@@ -25,7 +25,7 @@ class Woo_Product_Single {
 		add_action( 'woocommerce_before_single_product_summary', [ $this, 'asgard_woocommerce_show_product_images' ] );
 		add_action( 'woocommerce_single_product_summary', [	$this,	'custom_single_product_add_to_cart'	], 30 );
 		add_action( 'woocommerce_single_product_summary', [	$this,	'custom_single_product_excerpt'	], 35 );
-		// add_action( 'woocommerce_single_product_summary', [	$this,	'asgard_delivery_boxes'	], 36 );
+		add_action( 'woocommerce_single_product_summary', [	$this,	'asgard_delivery_boxes'	], 36 );
 		add_action( 'woocommerce_single_product_summary', [	$this,	'display_single_product_guarantee'	], 37 );
 		add_action( 'comment_post_redirect', [	$this,	'asgard_comment_post_redirect'	], 10, 2 );
 		add_action( 'woocommerce_after_single_product_summary', [	$this,	'asgard_seprate_description_review'	], 10 );
@@ -364,6 +364,7 @@ public static function get_single_product_delivery_data() {
 
 
 public function asgard_delivery_boxes() {
+	if ( is_product() ) {
 	$delivery_data = Woo_Product_Single::get_single_product_delivery_data();
 
 	if (!empty($delivery_data)) {
@@ -384,6 +385,7 @@ public function asgard_delivery_boxes() {
 
 					echo '</div>';
 	}
+}
 }
 
 }
